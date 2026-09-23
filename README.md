@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Jackson Huang: portfolio (starter)
 
 Vite + React, with GSAP for the hero animation. Header and hero are built from the
@@ -46,3 +47,6 @@ with no plugin needed.
 1. Build Studies, Projects, Experience, Interests, Contact from the Figma frame.
 2. If you want scroll animation later: `import { ScrollTrigger } from 'gsap/ScrollTrigger'`,
    `gsap.registerPlugin(ScrollTrigger)`, and tie it to something specific instead of fading everything in.
+=======
+# portfolio
+>>>>>>> d9a14eb5e83e8aba8e64a843aa41dcf001816c7f
