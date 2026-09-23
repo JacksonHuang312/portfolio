@@ -3,14 +3,15 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import Lattice from './Lattice.jsx'
 import { ArrowDownRight, ChevronDown } from './Icons.jsx'
+import { roles } from '../data/roles.js'
 
 gsap.registerPlugin(useGSAP)
 
 // The headline is split into words so each one can rise out of its own mask.
+// Only the name is left at full brightness; the rest sits back a shade.
 const TITLE = [
   { text: 'Jackson Huang -' },
-  { text: 'nanotech student', accent: true },
-  { text: 'ready for co-op.' },
+  { text: 'nanotech engineering @ UWaterloo.', muted: true },
 ]
 
 const LATTICE_WIDTH = 572
@@ -18,14 +19,14 @@ const LATTICE_HEIGHT = 660
 
 function Title() {
   const words = TITLE.flatMap((part) =>
-    part.text.split(' ').map((word) => ({ word, accent: part.accent })),
+    part.text.split(' ').map((word) => ({ word, muted: part.muted })),
   )
   return (
     <h1 className="hero__title">
-      {words.map(({ word, accent }, i) => (
+      {words.map(({ word, muted }, i) => (
         <Fragment key={i}>
           {i > 0 ? ' ' : null}
-          <span className={accent ? 'word word--accent' : 'word'}>
+          <span className={muted ? 'word word--muted' : 'word'}>
             <span className="word__inner">{word}</span>
           </span>
         </Fragment>
@@ -53,7 +54,6 @@ export default function Hero() {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
         tl.from(q('.word__inner'), { yPercent: 115, duration: 0.9, ease: 'power4.out', stagger: 0.06 }, 0.2)
           .from(q('[data-reveal]'), { autoAlpha: 0, y: 14, duration: 0.7, stagger: 0.08 }, 0.85)
-          .from(q('.hero__card'), { autoAlpha: 0, y: 24, duration: 0.8 }, 1.1)
           .from(atoms, { scale: 0, duration: 0.6, ease: 'back.out(2.2)', stagger: 0.12 }, 1.4)
 
         // A slow, quiet pulse on the atoms once everything has landed.
@@ -134,45 +134,46 @@ export default function Hero() {
     <section className="hero" id="top" ref={root}>
       <div className="hero__inner">
         <div className="hero__copy">
-          <div className="hero__pills" data-reveal>
-            <span className="pill pill--accent">Student Portfolio</span>
-            <span className="pill pill--sage">Waterloo Student</span>
+          <div className="hero__text">
+            <Title />
+
+            <p className="hero__lede" data-reveal>
+              I&rsquo;m a nanotechnology engineer who builds hardware, machine learning, and web
+              tools that turn ideas into working prototypes.
+            </p>
           </div>
 
-          <Title />
+          <div className="hero__bottom">
+            <div className="hero__roles" data-reveal>
+              {roles.map((role) => (
+                <div className="hero__role" key={role.company}>
+                  <span className="hero__role-year">{role.year}</span>
+                  <span className="hero__role-detail">
+                    <strong>{role.company}</strong> &mdash; {role.title}
+                  </span>
+                </div>
+              ))}
+            </div>
 
-          <p className="hero__lede" data-reveal>
-            I&rsquo;m a second-year Nanotechnology Engineering student at the University of
-            Waterloo who likes building tangible things: MEMS energy harvesters, machine-learning
-            models, and full-stack web apps. I&rsquo;m looking for a co-op where I can learn fast,
-            work with data, and ship real work.
-          </p>
-
-          <div className="hero__actions" data-reveal>
-            <a className="btn btn--primary" href="#projects">
-              <span className="btn__top-key" />
-              <span className="btn__text">View Projects <ChevronDown /></span>
-              <span className="btn__bottom-key-1" />
-              <span className="btn__bottom-key-2" />
-            </a>
-            <a className="btn btn--ghost" href="#studies">
-              <span className="btn__top-key" />
-              <span className="btn__text">Coursework &amp; Skills <ArrowDownRight /></span>
-              <span className="btn__bottom-key-1" />
-              <span className="btn__bottom-key-2" />
-            </a>
+            <div className="hero__actions" data-reveal>
+              <a className="btn btn--primary" href="#projects">
+                <span className="btn__top-key" />
+                <span className="btn__text">View Projects <ChevronDown /></span>
+                <span className="btn__bottom-key-1" />
+                <span className="btn__bottom-key-2" />
+              </a>
+              <a className="btn btn--ghost" href="#skills">
+                <span className="btn__top-key" />
+                <span className="btn__text">Skills <ArrowDownRight /></span>
+                <span className="btn__bottom-key-1" />
+                <span className="btn__bottom-key-2" />
+              </a>
+            </div>
           </div>
         </div>
 
         <div className="hero__visual" ref={visual}>
           <Lattice />
-          <div className="hero__card">
-            <p className="hero__card-title">Selected Work</p>
-            <p className="hero__card-text">
-              Hardware, machine learning, and web projects from a nanotechnology engineering
-              student at the University of Waterloo.
-            </p>
-          </div>
         </div>
       </div>
 

@@ -2,11 +2,9 @@ import { ArrowRight, BrandMark } from './Icons.jsx'
 import ThemeToggle from './ThemeToggle.jsx'
 
 const links = [
-  { label: 'Studies', href: '#studies' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Coursework', href: '#coursework' },
-  { label: 'Projects', href: '#projects' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Skills', href: '#skills' },
 ]
 
 export default function Header({ isDark, onThemeChange }) {
@@ -25,10 +23,9 @@ export default function Header({ isDark, onThemeChange }) {
 
       <div className="header-actions">
         <ThemeToggle isDark={isDark} onChange={onThemeChange} />
-        {/* Drop your CV into /public and name it cv.pdf */}
         <a className="btn btn--primary" href="/cv.pdf" target="_blank" rel="noopener">
           <span className="btn__top-key" />
-          <span className="btn__text">Open CV <ArrowRight /></span>
+          <span className="btn__text">Open Resume <ArrowRight /></span>
           <span className="btn__bottom-key-1" />
           <span className="btn__bottom-key-2" />
         </a>
