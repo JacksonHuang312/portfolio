@@ -6,6 +6,7 @@ import Projects from './components/Projects.jsx'
 import Experience from './components/Experience.jsx'
 import SkillMarquee from './components/SkillMarquee.jsx'
 import Footer from './components/Footer.jsx'
+import CursorTrail from './components/CursorTrail.jsx'
 
 export default function App() {
   const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark')
@@ -56,6 +57,7 @@ export default function App() {
         <SkillMarquee />
       </main>
       <Footer />
+      <CursorTrail />
     </div>
   )
 }
