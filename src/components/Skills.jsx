@@ -1,13 +1,13 @@
 const skillGroups = [
   {
     title: 'Languages',
-    tags: ['Python', 'SQL', 'JavaScript', 'Java', 'HTML', 'CSS', 'MatLab', 'Verilog'],
+    tags: ['Python', 'SQL', 'JavaScript', 'TypeScript', 'Java', 'C', 'R', 'PHP', 'Bash', 'PowerShell', 'HTML', 'CSS', 'MatLab', 'Verilog'],
   },
   {
     title: 'Technologies',
     tags: [
       'React', 'Node.js', 'Express', 'Vite', 'Firebase', 'Clerk', 'Socket.io', 'PostgreSQL',
-      'Redis', 'Git', 'GitHub', 'VS Code', 'Power BI', 'DAX', 'Google Analytics', 'SEMrush',
+      'Redis', 'Git', 'GitHub', 'VS Code', 'Cursor', 'Claude Code', 'Jupyter Notebook', 'Power BI', 'DAX', 'Google Analytics', 'SEMrush',
       'Ahrefs', 'AutoCAD', 'SolidWorks', 'Oscilloscope', 'Multimeter', 'Breadboarding', 'WordPress',
     ],
   },
@@ -15,7 +15,10 @@ const skillGroups = [
     title: 'Applied skills',
     tags: [
       'Energy harvesting', 'Microfabrication', 'Data visualization', 'Dashboard development',
-      'Database design', 'User authentication', 'Real-time systems', 'Technical troubleshooting',
+      'Real-time systems', 'Technical troubleshooting',
+      'Full-stack development', 'Responsive UI design',
+      'Circuit prototyping', 'CAD modeling', 'Data analysis', 'Business intelligence',
+      'SEO optimization', 'Agile collaboration',
     ],
   },
 ]

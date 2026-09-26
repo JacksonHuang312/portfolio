@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { LinkedIn, GitHub, Document } from './Icons.jsx'
-
-const EMAIL = 'j672huan@uwaterloo.ca'
+import { EMAIL, GITHUB_URL, LINKEDIN_URL } from '../data/contact.js'
 
 const timeFormatter = new Intl.DateTimeFormat('en-US', {
   hour: 'numeric',
@@ -38,11 +37,11 @@ export default function Footer() {
             <Document />
             <span>Resume</span>
           </a>
-          <a href="https://www.linkedin.com/in/jackson-huang-a5792b359/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+          <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn">
             <LinkedIn />
             <span>LinkedIn</span>
           </a>
-          <a href="https://github.com/JacksonHuang312" target="_blank" rel="noreferrer" aria-label="GitHub">
+          <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="GitHub">
             <GitHub />
             <span>GitHub</span>
           </a>

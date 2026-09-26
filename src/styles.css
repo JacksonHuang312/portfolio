@@ -1,13 +1,17 @@
 /* ---------- Tokens ----------
-  The palette is intentionally restrained so typography, structure, and motion
-  carry the visual identity. Change a value here and it updates everywhere. */
+  Neutral backgrounds and text, with green accents from the palette
+  #9CB080 / #618764 / #2B5748 / #273338. Light mode uses the deep greens so
+  small text stays readable; dark mode uses the light greens.
+  Change a value here and it updates everywhere. */
 :root {
   --cream: #f7f7f5;
   --ink: #111111;
-  --terracotta: #111111;
-  --terracotta-strong: #111111;
-  --sage: #737373;
-  --sage-strong: #404040;
+  --terracotta: #2b5748;
+  --terracotta-strong: #2b5748;
+  --sage: #618764;
+  --sage-strong: #2b5748;
+  /* For things drawn on an inverted (ink-coloured) surface, like the hero card */
+  --accent-on-ink: #9cb080;
 
   --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
   --font-body: 'Figtree Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -67,10 +71,11 @@
 .app--dark {
   --cream: #111111;
   --ink: #f7f7f5;
-  --terracotta: #f7f7f5;
-  --terracotta-strong: #f7f7f5;
-  --sage: #a3a3a3;
-  --sage-strong: #d6d6d6;
+  --terracotta: #9cb080;
+  --terracotta-strong: #9cb080;
+  --sage: #618764;
+  --sage-strong: #9cb080;
+  --accent-on-ink: #2b5748;
 }
 
 /* ---------- Base ---------- */
@@ -154,6 +159,46 @@ a {
   top: 12px;
 }
 
+/* ---------- Highlighted links ----------
+  Text links sit on a marker-style highlight, each in a different palette green.
+  The two lighter greens take dark text, the two darker ones light text. */
+.highlight {
+  padding: 0.05em 0.3em;
+  border-radius: 3px;
+  background: var(--hl-bg);
+  color: var(--hl-fg);
+  text-decoration: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* On hover every highlight flips to solid ink, so it clearly reads as a link */
+.highlight:hover,
+.highlight:focus-visible {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.highlight--1 { --hl-bg: #9cb080; --hl-fg: #111111; }
+.highlight--2 { --hl-bg: #618764; --hl-fg: #111111; }
+.highlight--3 { --hl-bg: #2b5748; --hl-fg: #f7f7f5; }
+.highlight--4 { --hl-bg: #273338; --hl-fg: #f7f7f5; }
+
+/* The headline link has to fit inside its word mask. The serif's line box has
+   extra room above the caps and none below the "@", so the highlight is drawn
+   as a gradient trimmed at the top, with padding added underneath. */
+.word__inner.highlight {
+  --hl-fill: var(--hl-bg);
+  padding: 0 0.06em 0.04em;
+  background: linear-gradient(var(--hl-fill), var(--hl-fill)) bottom / 100% calc(100% - 0.08em) no-repeat;
+}
+
+.word__inner.highlight:hover,
+.word__inner.highlight:focus-visible {
+  --hl-fill: var(--ink);
+}
+
 /* ---------- Buttons ---------- */
 .btn {
   position: relative;
@@ -232,7 +277,8 @@ a {
 }
 
 .btn:hover {
-  background: var(--ink);
+  background: var(--terracotta-strong);
+  border-color: var(--terracotta-strong);
   color: var(--cream);
 }
 
@@ -390,9 +436,10 @@ a {
 
 .site-nav a {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
-  color: color-mix(in srgb, var(--ink) 78%, transparent);
+  color: var(--terracotta-strong);
+  transition: color 0.2s ease;
 }
 
 .site-nav a:hover {
@@ -464,6 +511,58 @@ a {
 
 .word--muted {
   color: color-mix(in srgb, var(--ink) 45%, transparent);
+}
+
+.hero__socials {
+  display: flex;
+  gap: 18px;
+}
+
+.hero__socials a,
+.hero__social-button {
+  display: inline-flex;
+  color: color-mix(in srgb, var(--ink) 75%, transparent);
+  transition: color 0.2s ease;
+}
+
+.hero__socials a:hover,
+.hero__socials a:focus-visible,
+.hero__social-button:hover,
+.hero__social-button:focus-visible {
+  color: var(--terracotta-strong);
+}
+
+.hero__social-button {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+}
+
+/* Small note that pops up above the Discord icon after copying */
+.hero__social-toast {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  color: var(--terracotta-strong);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hero__social-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.hero__socials svg {
+  width: 22px;
+  height: 22px;
 }
 
 .hero__lede {
@@ -599,7 +698,7 @@ a {
 }
 
 .experience-item:hover {
-  background: color-mix(in srgb, var(--terracotta) 8%, transparent);
+  background: color-mix(in srgb, var(--sage) 12%, transparent);
   transform: translateY(-3px);
 }
 
@@ -834,9 +933,15 @@ a {
 }
 
 .lattice__atom {
-  fill: var(--cream);
+  fill: var(--accent-on-ink);
   transform-box: fill-box;
   transform-origin: center;
+}
+
+.lattice__atom--ring {
+  fill: none;
+  stroke: var(--accent-on-ink);
+  stroke-width: 2.4;
 }
 
 /* ---------- Projects ---------- */
@@ -944,7 +1049,7 @@ a {
 }
 
 .project-card:hover {
-  background: color-mix(in srgb, var(--terracotta) 8%, transparent);
+  background: color-mix(in srgb, var(--sage) 12%, transparent);
   transform: translateY(-5px);
 }
 

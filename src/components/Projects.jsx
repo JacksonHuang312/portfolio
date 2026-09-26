@@ -1,19 +1,21 @@
-import { ArrowDownRight, ArrowUpRight } from './Icons.jsx'
+import { ArrowUpRight } from './Icons.jsx'
 
 const projects = [
   {
     number: '01',
     type: 'Hardware + energy',
     title: 'Triboelectric Nanogenerator',
-    description: 'A MEMS-based nanogenerator harvesting energy from airflow-induced motion at frequencies up to 10 Hz, using a contact-separation mechanism to generate peak voltages in the tens of volts.',
-    tags: ['MEMS', 'Energy Harvesting'],
+    description: 'A MEMS-based triboelectric nanogenerator that harvests energy from airflow-induced motion at frequencies up to 10 Hz. It uses a contact-separation mechanism: two materials with opposite charge affinities repeatedly touch and pull apart, building up surface charge that drives current through an external load and generates peak voltages in the tens of volts. The aim is to turn everyday ambient airflow into usable power for small, self-powered sensors and electronics.',
+    tags: ['MEMS', 'Energy Harvesting', 'Triboelectric Effect', 'Microfabrication', 'Self-Powered Sensors', 'Oscilloscope Testing'],
   },
   {
     number: '02',
     type: 'Full-stack web',
-    title: 'ChatApp',
+    title: 'TalkRetro',
     description: 'A real-time chat app with a custom Windows XP-themed UI — DMs and group chats with replies, reactions, live presence, and typing indicators for 50+ test users.',
     tags: ['React', 'Socket.io', 'PostgreSQL'],
+    link: 'https://talkretro.vercel.app/',
+    image: '/projects/chatapp.png',
   },
   {
     number: '03',
@@ -59,7 +61,6 @@ export default function Projects() {
                   </a>
                 )}
               </div>
-              {!project.link && <ArrowDownRight />}
             </article>
           ))}
         </div>

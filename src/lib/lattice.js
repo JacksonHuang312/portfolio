@@ -15,7 +15,7 @@ const mulberry32 = (seed) => () => {
 const round = (n) => Math.round(n * 100) / 100
 const key = (x, y) => `${Math.round(x * 10)}_${Math.round(y * 10)}`
 
-export function buildLattice({ width, height, size = 46, atomCount = 6, seed = 11 }) {
+export function buildLattice({ width, height, size = 46, atomCount = 6, atomGap = 130, seed = 11 }) {
   const w = Math.sqrt(3) * size // hexagon width (pointy-top)
   const rowH = 1.5 * size // vertical distance between rows
   const cols = Math.ceil(width / w) + 2
@@ -59,17 +59,17 @@ export function buildLattice({ width, height, size = 46, atomCount = 6, seed = 1
     )
     .sort((a, b) => a.x1 + a.y1 + a.x2 + a.y2 - (b.x1 + b.y1 + b.x2 + b.y2))
 
-  // Highlighted atoms: random vertices, kept away from the edges, the caption
-  // card at the bottom, and each other.
+  // Highlighted atoms: random vertices, kept away from the edges
+  // and each other.
   const rand = mulberry32(seed)
   const candidates = [...vertices.values()]
-    .filter(([x, y]) => x > 70 && x < width - 70 && y > 70 && y < height - 240)
+    .filter(([x, y]) => x > 70 && x < width - 70 && y > 70 && y < height - 70)
     .sort(() => rand() - 0.5)
 
   const atoms = []
   for (const [x, y] of candidates) {
     if (atoms.length >= atomCount) break
-    if (atoms.every((a) => Math.hypot(a.x - x, a.y - y) > 130)) atoms.push({ x, y })
+    if (atoms.every((a) => Math.hypot(a.x - x, a.y - y) > atomGap)) atoms.push({ x, y })
   }
 
   return { edges, atoms }

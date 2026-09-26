@@ -1,37 +1,84 @@
-import { Fragment, useRef } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import Lattice from './Lattice.jsx'
-import { ArrowDownRight, ChevronDown } from './Icons.jsx'
+import { ArrowDownRight, ChevronDown, Discord, GitHub, LinkedIn, Mail } from './Icons.jsx'
 import { roles } from '../data/roles.js'
+import { DISCORD_USERNAME, EMAIL, GITHUB_URL, LINKEDIN_URL } from '../data/contact.js'
 
 gsap.registerPlugin(useGSAP)
 
 // The headline is split into words so each one can rise out of its own mask.
 // Only the name is left at full brightness; the rest sits back a shade.
+// Each part starts on its own line.
 const TITLE = [
   { text: 'Jackson Huang -' },
-  { text: 'nanotech engineering @ UWaterloo.', muted: true },
+  { text: '@UWaterloo', muted: true, href: 'https://uwaterloo.ca/', highlight: 1 },
 ]
 
 const LATTICE_WIDTH = 572
 const LATTICE_HEIGHT = 660
 
 function Title() {
-  const words = TITLE.flatMap((part) =>
-    part.text.split(' ').map((word) => ({ word, muted: part.muted })),
+  const words = TITLE.flatMap((part, p) =>
+    part.text.split(' ').map((word, w) => ({
+      word,
+      muted: part.muted,
+      href: part.href,
+      highlight: part.highlight,
+      lineStart: p > 0 && w === 0,
+    })),
   )
   return (
     <h1 className="hero__title">
-      {words.map(({ word, muted }, i) => (
+      {words.map(({ word, muted, href, highlight, lineStart }, i) => (
         <Fragment key={i}>
-          {i > 0 ? ' ' : null}
+          {lineStart ? <br /> : i > 0 ? ' ' : null}
           <span className={muted ? 'word word--muted' : 'word'}>
-            <span className="word__inner">{word}</span>
+            {href ? (
+              <a className={`word__inner highlight highlight--${highlight}`} href={href} target="_blank" rel="noopener">{word}</a>
+            ) : (
+              <span className="word__inner">{word}</span>
+            )}
           </span>
         </Fragment>
       ))}
     </h1>
+  )
+}
+
+// Discord has no profile links for usernames, so this copies the username instead
+// and briefly shows a note saying so.
+function DiscordCopy() {
+  const [status, setStatus] = useState(null)
+  const timer = useRef(null)
+
+  useEffect(() => () => clearTimeout(timer.current), [])
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(DISCORD_USERNAME)
+      setStatus('copied')
+    } catch {
+      setStatus('failed')
+    }
+    clearTimeout(timer.current)
+    timer.current = setTimeout(() => setStatus(null), 2000)
+  }
+
+  return (
+    <button
+      type="button"
+      className="hero__social-button"
+      onClick={copy}
+      aria-label={`Copy Discord username ${DISCORD_USERNAME}`}
+    >
+      <Discord />
+      <span className={`hero__social-toast${status ? ' is-visible' : ''}`} role="status">
+        {status === 'copied' && 'Username copied!'}
+        {status === 'failed' && `Discord: ${DISCORD_USERNAME}`}
+      </span>
+    </button>
   )
 }
 
@@ -87,8 +134,8 @@ export default function Hero() {
             yTo(-((e.clientY - r.top) / r.height - 0.5) * 28)
 
             dotNodes.forEach((dotNode) => {
-              const dotX = Number(dotNode.getAttribute('cx'))
-              const dotY = Number(dotNode.getAttribute('cy'))
+              const dotX = Number(dotNode.dataset.x)
+              const dotY = Number(dotNode.dataset.y)
               const distanceX = dotX - pointerX
               const distanceY = dotY - pointerY
               const distance = Math.hypot(distanceX, distanceY)
@@ -137,8 +184,30 @@ export default function Hero() {
           <div className="hero__text">
             <Title />
 
+            <div className="hero__socials" data-reveal>
+              <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="GitHub">
+                <GitHub />
+              </a>
+              <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <LinkedIn />
+              </a>
+              <a href={`mailto:${EMAIL}`} aria-label={`Email ${EMAIL}`}>
+                <Mail />
+              </a>
+              <DiscordCopy />
+            </div>
+
             <p className="hero__lede" data-reveal>
-              I&rsquo;m a nanotechnology engineer who builds hardware, machine learning, and web
+              I&rsquo;m a{' '}
+              <a
+                className="highlight highlight--2"
+                href="https://uwaterloo.ca/future-students/programs/nanotechnology-engineering"
+                target="_blank"
+                rel="noopener"
+              >
+                nanotechnology engineer
+              </a>{' '}
+              who builds hardware, machine learning, and web
               tools that turn ideas into working prototypes.
             </p>
           </div>
@@ -149,7 +218,11 @@ export default function Hero() {
                 <div className="hero__role" key={role.company}>
                   <span className="hero__role-year">{role.year}</span>
                   <span className="hero__role-detail">
-                    <strong>{role.company}</strong> &mdash; {role.title}
+                    <strong>
+                      {role.url ? (
+                        <a className={`highlight highlight--${role.highlight}`} href={role.url} target="_blank" rel="noopener">{role.company}</a>
+                      ) : role.company}
+                    </strong> &mdash; {role.title}
                   </span>
                 </div>
               ))}

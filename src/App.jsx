@@ -23,6 +23,27 @@ export default function App() {
     localStorage.setItem('theme', isDark ? 'dark' : 'light')
   }, [isDark])
 
+  // Scroll to in-page sections without putting the #hash in the URL
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+      const link = e.target.closest('a[href^="#"]')
+      if (!link) return
+      const target = document.getElementById(link.getAttribute('href').slice(1))
+      if (!target) return
+
+      e.preventDefault()
+      target.scrollIntoView()
+      if (target.id === 'main') {
+        target.setAttribute('tabindex', '-1')
+        target.focus({ preventScroll: true })
+      }
+    }
+
+    document.addEventListener('click', handleClick)
+    return () => document.removeEventListener('click', handleClick)
+  }, [])
+
   return (
     <div className={isDark ? 'app app--dark' : 'app'}>
       <a className="skip-link" href="#main">Skip to content</a>

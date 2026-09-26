@@ -14,7 +14,11 @@ export default function Experience() {
               <p className="experience-item__year">{role.year}</p>
               <div className="experience-item__body">
                 <h3>{role.title}</h3>
-                <p className="experience-item__company">{role.company}</p>
+                <p className="experience-item__company">
+                  {role.url ? (
+                    <a className={`highlight highlight--${role.highlight}`} href={role.url} target="_blank" rel="noopener">{role.company}</a>
+                  ) : role.company}
+                </p>
                 <p className="experience-item__blurb">{role.blurb}</p>
               </div>
               <div className="experience-item__logo">
