@@ -1045,12 +1045,11 @@ a {
   gap: 20px;
   padding: 28px;
   border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .project-card:hover {
   background: color-mix(in srgb, var(--sage) 12%, transparent);
-  transform: translateY(-5px);
 }
 
 .project-card--media {
@@ -1077,13 +1076,6 @@ a {
   height: 100%;
   object-fit: cover;
   object-position: top;
-  filter: grayscale(1) contrast(1.05);
-  transition: filter 0.3s ease, transform 0.4s ease;
-}
-
-.project-card:hover .project-card__media img {
-  filter: grayscale(0);
-  transform: scale(1.03);
 }
 
 .project-card--media .project-card__number {
@@ -1223,10 +1215,6 @@ a {
     grid-template-columns: 36px minmax(0, 1fr);
     gap: 12px;
     padding: 24px 0;
-  }
-
-  .project-card:hover {
-    padding-left: 8px;
   }
 
   .project-card > svg {
