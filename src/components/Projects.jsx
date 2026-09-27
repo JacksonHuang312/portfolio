@@ -25,6 +25,7 @@ const projects = [
     tags: ['React', 'Materials Project API'],
     link: 'https://materialsdatabase.vercel.app/',
     image: '/projects/materials-db.png',
+    video: '/projects/materials-db.mp4',
   },
 ]
 
@@ -44,7 +45,21 @@ export default function Projects() {
             >
               {project.image && (
                 <div className="project-card__media">
-                  <img src={project.image} alt={`${project.title} screenshot`} loading="lazy" />
+                  {project.video ? (
+                    <video
+                      src={project.video}
+                      ref={(el) => {
+                        if (el) el.muted = true
+                      }}
+                      aria-label={`${project.title} demo`}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  ) : (
+                    <img src={project.image} alt={`${project.title} screenshot`} loading="lazy" />
+                  )}
                 </div>
               )}
               <div className="project-card__number">{project.number}</div>

@@ -1086,7 +1086,8 @@ a {
   background: color-mix(in srgb, var(--ink) 6%, transparent);
 }
 
-.project-card__media img {
+.project-card__media img,
+.project-card__media video {
   display: block;
   width: 100%;
   height: 100%;
