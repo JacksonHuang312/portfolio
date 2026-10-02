@@ -106,6 +106,52 @@ section[id] {
   scroll-margin-top: 28px;
 }
 
+/* Page scrollbar: a pill-shaped green thumb on the page background. The scrollbar
+   lives on <html>, outside .app, so :has() picks up the dark theme. */
+html {
+  --scroll-track: #f7f7f5;
+  --scroll-thumb: #618764;
+  --scroll-thumb-hover: #2b5748;
+}
+
+html:has(.app--dark) {
+  --scroll-track: #111111;
+  --scroll-thumb: #618764;
+  --scroll-thumb-hover: #9cb080;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border: 2px solid var(--scroll-track);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scroll-track);
+}
+
+/* Firefox has no ::-webkit-scrollbar, so it gets the standard properties.
+   Chrome ignores the webkit rules above if these are set, so they stay scoped. */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+    scrollbar-width: thin;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
