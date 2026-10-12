@@ -7,7 +7,7 @@ const skillGroups = [
     title: 'Technologies',
     tags: [
       'React', 'Node.js', 'Express', 'Vite', 'Firebase', 'Clerk', 'Socket.io', 'PostgreSQL',
-      'Redis', 'Git', 'GitHub', 'VS Code', 'Cursor', 'Claude Code', 'Jupyter Notebook', 'Power BI', 'DAX', 'Google Analytics', 'SEMrush',
+      'Redis', 'Git', 'GitHub', 'VS Code', 'Cursor', 'Claude Code', 'Jupyter Notebook', 'pandas', 'NumPy', 'scikit-learn', 'Power BI', 'DAX', 'Google Analytics', 'SEMrush',
       'Ahrefs', 'AutoCAD', 'SolidWorks', 'Oscilloscope', 'Multimeter', 'Breadboarding', 'WordPress',
     ],
   },
