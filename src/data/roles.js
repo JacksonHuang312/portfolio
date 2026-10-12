@@ -1,7 +1,7 @@
 export const roles = [
   {
     year: '2026',
-    title: 'Data-Driven Solutions Consultant',
+    title: 'Data Analyst',
     company: 'The Maverik',
     url: 'https://themaverik.com/',
     highlight: 3,
