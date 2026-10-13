@@ -1,4 +1,4 @@
-import { ArrowUpRight } from './Icons.jsx'
+import { ArrowUpRight, GitHub } from './Icons.jsx'
 
 const projects = [
   {
@@ -27,6 +27,15 @@ const projects = [
     image: '/projects/materials-db.png',
     video: '/projects/materials-db.mp4',
   },
+  {
+    number: '04',
+    type: 'Full-stack web',
+    title: 'Do You Even Log Bro?',
+    description: 'A free, Hevy-style workout tracker for the web. Log sets and reps, save routines, add custom exercises, and share workouts that friends can like and comment on. In-progress workouts survive refreshes, and saves queue offline when the gym has no signal.',
+    tags: ['Next.js', 'TypeScript', 'Firebase', 'Firestore', 'Tailwind CSS', 'PWA'],
+    link: 'https://doyouevenlogbro.vercel.app/',
+    video: '/projects/logbro-demo.mp4',
+  },
 ]
 
 export default function Projects() {
@@ -38,16 +47,19 @@ export default function Projects() {
         </div>
 
         <div className="project-list">
-          {projects.map((project) => (
+          {projects.map((project) => {
+            const hasMedia = Boolean(project.image || project.video)
+            return (
             <article
-              className={`project-card${project.image ? ' project-card--media' : ''}`}
+              className={`project-card${hasMedia ? ' project-card--media' : ''}`}
               key={project.number}
             >
-              {project.image && (
+              {hasMedia && (
                 <div className="project-card__media">
                   {project.video ? (
                     <video
                       src={project.video}
+                      poster={project.image}
                       ref={(el) => {
                         if (el) el.muted = true
                       }}
@@ -70,14 +82,24 @@ export default function Projects() {
                 <div className="project-card__tags">
                   {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
                 </div>
-                {project.link && (
-                  <a className="project-card__visit" href={project.link} target="_blank" rel="noreferrer">
-                    Visit project <ArrowUpRight />
-                  </a>
+                {(project.link || project.repo) && (
+                  <div className="project-card__links">
+                    {project.link && (
+                      <a className="project-card__visit" href={project.link} target="_blank" rel="noreferrer">
+                        Visit project <ArrowUpRight />
+                      </a>
+                    )}
+                    {project.repo && (
+                      <a className="project-card__visit" href={project.repo} target="_blank" rel="noreferrer">
+                        <GitHub /> View code
+                      </a>
+                    )}
+                  </div>
                 )}
               </div>
             </article>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>

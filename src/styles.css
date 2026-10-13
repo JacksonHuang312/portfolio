@@ -1145,6 +1145,17 @@ a {
   margin-top: 24px;
 }
 
+.project-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 20px;
+}
+
+.project-card__links .project-card__visit {
+  margin-top: 0;
+}
+
 .project-card__visit {
   position: relative;
   z-index: 1;
