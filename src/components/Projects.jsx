@@ -17,6 +17,7 @@ const projects = [
     tags: ['React', 'Socket.io', 'PostgreSQL'],
     link: 'https://talkretro.vercel.app/',
     image: '/projects/chatapp.png',
+    video: '/projects/talkretro-demo.mp4',
   },
   {
     number: '03',
