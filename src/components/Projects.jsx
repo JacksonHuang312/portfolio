@@ -7,6 +7,7 @@ const projects = [
     title: 'Triboelectric Nanogenerator',
     description: 'A MEMS-based triboelectric nanogenerator that harvests energy from airflow-induced motion at frequencies up to 10 Hz. It uses a contact-separation mechanism: two materials with opposite charge affinities repeatedly touch and pull apart, building up surface charge that drives current through an external load and generates peak voltages in the tens of volts. The aim is to turn everyday ambient airflow into usable power for small, self-powered sensors and electronics.',
     tags: ['MEMS', 'Energy Harvesting', 'Triboelectric Effect', 'Microfabrication', 'Self-Powered Sensors', 'Oscilloscope Testing'],
+    graphic: 'tribo',
   },
   {
     number: '02',
@@ -38,6 +39,32 @@ const projects = [
   },
 ]
 
+// Wind spinning a fan that's wired to a load.
+function TriboGraphic() {
+  const blade = 'M170 88C150 78 148 50 164 38C180 50 182 74 170 88Z'
+  return (
+    <svg className="tribo-graphic" viewBox="0 0 320 200" role="img" aria-label="Wind blowing onto a fan that generates electricity">
+      <g className="tribo-graphic__air" fill="none" strokeWidth="2.5" strokeLinecap="round">
+        <path d="M18 62c14-10 28 10 42 0s20-6 30-2" />
+        <path d="M10 100c16-10 32 10 48 0s24-6 40-2" />
+        <path d="M18 138c14-10 28 10 42 0s20-6 30-2" />
+      </g>
+      <g className="tribo-graphic__wire" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M170 92v76M148 168h44" />
+        <path d="M180 158h96v-37" />
+      </g>
+      <g className="tribo-graphic__fan">
+        {[0, 120, 240].map((angle) => (
+          <path key={angle} d={blade} transform={`rotate(${angle} 170 88)`} />
+        ))}
+      </g>
+      <circle className="tribo-graphic__hub" cx="170" cy="88" r="7" />
+      <circle className="tribo-graphic__load" cx="276" cy="100" r="21" />
+      <path className="tribo-graphic__bolt" d="M279 86l-11 17h8l-3 11 11-17h-8z" />
+    </svg>
+  )
+}
+
 export default function Projects() {
   return (
     <section className="projects-page" id="projects" aria-labelledby="projects-title">
@@ -48,7 +75,7 @@ export default function Projects() {
 
         <div className="project-list">
           {projects.map((project) => {
-            const hasMedia = Boolean(project.image || project.video)
+            const hasMedia = Boolean(project.image || project.video || project.graphic)
             return (
             <article
               className={`project-card${hasMedia ? ' project-card--media' : ''}`}
@@ -56,7 +83,9 @@ export default function Projects() {
             >
               {hasMedia && (
                 <div className="project-card__media">
-                  {project.video ? (
+                  {project.graphic === 'tribo' ? (
+                    <TriboGraphic />
+                  ) : project.video ? (
                     <video
                       src={project.video}
                       poster={project.image}

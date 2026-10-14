@@ -1094,8 +1094,8 @@ a {
 
 .project-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
   margin-top: 56px;
 }
 
@@ -1116,7 +1116,8 @@ a {
 
 .project-card--media {
   grid-template-rows: auto auto 1fr auto;
-  padding: 0 0 28px;
+  gap: 12px;
+  padding: 0 0 24px;
 }
 
 .project-card--media .project-card__number,
@@ -1142,7 +1143,81 @@ a {
 }
 
 .project-card--media .project-card__number {
-  margin-top: 24px;
+  margin-top: 20px;
+}
+
+.tribo-graphic {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 6% 10%;
+}
+
+.tribo-graphic__air path {
+  stroke: var(--sage);
+  stroke-dasharray: 10 8;
+  animation: tribo-air 1.4s linear infinite;
+}
+
+.tribo-graphic__fan {
+  fill: var(--terracotta-strong);
+  transform-origin: 170px 88px;
+  animation: tribo-spin 1.6s linear infinite;
+}
+
+.tribo-graphic__hub {
+  fill: var(--cream);
+  stroke: var(--terracotta-strong);
+  stroke-width: 3;
+}
+
+.tribo-graphic__wire path {
+  stroke: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
+.tribo-graphic__load {
+  fill: none;
+  stroke: var(--terracotta-strong);
+  stroke-width: 2;
+}
+
+.tribo-graphic__bolt {
+  fill: var(--terracotta-strong);
+  animation: tribo-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes tribo-air {
+  to { stroke-dashoffset: -36; }
+}
+
+@keyframes tribo-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes tribo-pulse {
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tribo-graphic__air path,
+  .tribo-graphic__fan,
+  .tribo-graphic__bolt {
+    animation: none;
+  }
+}
+
+.project-card--media h2 {
+  font-size: clamp(22px, 2.2vw, 28px);
+}
+
+.project-card--media .project-card__description {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.project-card--media .project-card__tags {
+  margin-top: 14px;
 }
 
 .project-card__links {
