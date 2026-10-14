@@ -1128,7 +1128,7 @@ a {
 
 .project-card__media {
   overflow: hidden;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   border-bottom: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
   background: color-mix(in srgb, var(--ink) 6%, transparent);
 }
@@ -1140,6 +1140,10 @@ a {
   height: 100%;
   object-fit: cover;
   object-position: top;
+}
+
+.project-card__media video {
+  object-fit: contain;
 }
 
 .project-card--media .project-card__number {
